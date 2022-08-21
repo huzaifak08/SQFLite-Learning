@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:sqflite/sqlite_api.dart';
 import 'package:sqflite_learn/database_handler.dart';
+import 'package:sqflite_learn/user_model.dart';
+import 'package:sqflite_learn/user_repo.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -60,5 +62,24 @@ class _HomeState extends State<Home> {
   Future<Database?> openDB() async {
     _database = await DatabaseHandler().openDB();
     return _database;
+  }
+
+  Future<void> insertDB() async {
+    _database = await openDB(); // Upper openDB function
+
+    UserRepo userRepo = new UserRepo();
+    userRepo.createTable(_database);
+
+    UserModel userModel = new UserModel(
+      nameController.text.toString(),
+      emailController.text.toString(),
+      int.tryParse(
+        ageController.text.toString(),
+      )!, // Remember this !
+    );
+
+    await _database?.insert('User', userModel.toMap());
+
+    await _database?.close();
   }
 }
