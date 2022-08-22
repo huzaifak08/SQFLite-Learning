@@ -16,6 +16,8 @@ class _HomeState extends State<Home> {
   TextEditingController emailController = TextEditingController();
   TextEditingController ageController = TextEditingController();
   Database? _database;
+  List<Map<String, dynamic>>? usersList;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -64,20 +66,32 @@ class _HomeState extends State<Home> {
                   child: Text('Read Data')),
 
               // Display Data on Screen:
-              Card(
-                  child: Column(
-                children: [
-                  Text(nameController.text),
-                  Text(emailController.text),
-                  Text(ageController.text),
-                ],
-              )),
+              Container(
+                // color: Colors.amber,
+                height: 250,
+                child: usersList != null
+                    ? buildUserList()
+                    : Text('data not found'),
+              )
             ],
           ),
         ),
       ),
     );
   }
+
+  Widget buildUserList() => Expanded(
+          child: ListView.builder(
+        itemCount: usersList?.length,
+        itemBuilder: (context, index) {
+          var name = usersList?[index]['name'];
+          var email = usersList?[index]['email'];
+          var age = usersList?[index]['age'];
+          return Card(
+            child: Text('UserName: $name \n Email: $email \n Age: $age'),
+          );
+        },
+      ));
 
   Future<Database?> openDB() async {
     _database = await DatabaseHandler().openDB();
@@ -106,7 +120,7 @@ class _HomeState extends State<Home> {
   Future<void> getFromUser() async {
     _database = await openDB();
     UserRepo userRepo = new UserRepo();
-    await userRepo.getUser(_database);
+    usersList = await userRepo.getUsers(_database);
     await _database?.close();
   }
 }

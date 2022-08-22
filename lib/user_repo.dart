@@ -6,8 +6,14 @@ class UserRepo {
         'CREATE TABLE IF NOT EXISTS User(id INTEGER PRIMARY KEY, name TEXT, email TEXT, age INTEGER)');
   }
 
-  Future<void> getUser(Database? db) async {
+  // Future<void> getUser(Database? db) async {
+  //   final List<Map<String, dynamic>> maps = await db!.query('User');
+  //   print(maps);
+  // }
+
+  // For fetching all the data:
+  Future<List<Map<String, dynamic>>> getUsers(Database? db) async {
     final List<Map<String, dynamic>> maps = await db!.query('User');
-    print(maps);
+    return maps;
   }
 }
