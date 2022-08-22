@@ -50,9 +50,17 @@ class _HomeState extends State<Home> {
               ),
             ),
             SizedBox(height: 12),
-            OutlinedButton(onPressed: () {}, child: Text('Insert Data')),
+            OutlinedButton(
+                onPressed: () {
+                  insertDB();
+                },
+                child: Text('Insert Data')),
             SizedBox(height: 12),
-            OutlinedButton(onPressed: () {}, child: Text('Read Data')),
+            OutlinedButton(
+                onPressed: () {
+                  getFromUser();
+                },
+                child: Text('Read Data')),
           ],
         ),
       ),
@@ -80,6 +88,13 @@ class _HomeState extends State<Home> {
 
     await _database?.insert('User', userModel.toMap());
 
+    await _database?.close();
+  }
+
+  Future<void> getFromUser() async {
+    _database = await openDB();
+    UserRepo userRepo = new UserRepo();
+    await userRepo.getUser(_database);
     await _database?.close();
   }
 }
