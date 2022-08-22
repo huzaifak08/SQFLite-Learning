@@ -22,46 +22,58 @@ class _HomeState extends State<Home> {
       appBar: AppBar(
         title: Text('SqfLite Learn'),
       ),
-      body: Container(
-        padding: EdgeInsets.all(12),
-        child: Column(
-          children: [
-            TextField(
-              controller: nameController,
-              decoration: InputDecoration(
-                border: OutlineInputBorder(),
-                labelText: 'Enter your name:',
+      body: SingleChildScrollView(
+        child: Container(
+          padding: EdgeInsets.all(12),
+          child: Column(
+            children: [
+              TextField(
+                controller: nameController,
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(),
+                  labelText: 'Enter your name:',
+                ),
               ),
-            ),
-            SizedBox(height: 12),
-            TextField(
-              controller: emailController,
-              decoration: InputDecoration(
-                border: OutlineInputBorder(),
-                labelText: 'Enter your email:',
+              SizedBox(height: 12),
+              TextField(
+                controller: emailController,
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(),
+                  labelText: 'Enter your email:',
+                ),
               ),
-            ),
-            SizedBox(height: 12),
-            TextField(
-              controller: ageController,
-              decoration: InputDecoration(
-                border: OutlineInputBorder(),
-                labelText: 'Enter your age:',
+              SizedBox(height: 12),
+              TextField(
+                controller: ageController,
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(),
+                  labelText: 'Enter your age:',
+                ),
               ),
-            ),
-            SizedBox(height: 12),
-            OutlinedButton(
-                onPressed: () {
-                  insertDB();
-                },
-                child: Text('Insert Data')),
-            SizedBox(height: 12),
-            OutlinedButton(
-                onPressed: () {
-                  getFromUser();
-                },
-                child: Text('Read Data')),
-          ],
+              SizedBox(height: 12),
+              OutlinedButton(
+                  onPressed: () {
+                    insertDB();
+                  },
+                  child: Text('Insert Data')),
+              SizedBox(height: 12),
+              OutlinedButton(
+                  onPressed: () {
+                    getFromUser();
+                  },
+                  child: Text('Read Data')),
+
+              // Display Data on Screen:
+              Card(
+                  child: Column(
+                children: [
+                  Text(nameController.text),
+                  Text(emailController.text),
+                  Text(ageController.text),
+                ],
+              )),
+            ],
+          ),
         ),
       ),
     );

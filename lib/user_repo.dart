@@ -3,7 +3,7 @@ import 'package:sqflite/sqflite.dart';
 class UserRepo {
   void createTable(Database? db) {
     db?.execute(
-        'CREATE TABLE User(id INTEGER PRIMARY KEY, name TEXT, email TEXT, age INTEGER)');
+        'CREATE TABLE IF NOT EXISTS User(id INTEGER PRIMARY KEY, name TEXT, email TEXT, age INTEGER)');
   }
 
   Future<void> getUser(Database? db) async {
